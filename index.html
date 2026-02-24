@@ -1,0 +1,179 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Conflict Resolution in Warehouse Robotics</title>
+  <meta name="description" content="Decentralized conflict detection + QP-based resolution for multi-robot warehouse navigation." />
+  <link rel="stylesheet" href="./assets/css/style.css" />
+</head>
+
+<body>
+  <header class="topbar">
+    <div class="container topbar-inner">
+      <div class="brand">
+        <div class="brand-title">Conflict Resolution in Warehouse Robotics</div>
+        <div class="brand-sub">Poster companion page</div>
+      </div>
+      <nav class="nav">
+        <a href="#abstract">Abstract</a>
+        <a href="#figures">Figures</a>
+        <a href="#videos">Videos</a>
+        <a href="#results">Results</a>
+        <a href="#resources">Resources</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="hero">
+      <h1>Conflict Resolution in Warehouse Robotics</h1>
+      <p class="authors">
+        Goutham Muralikrishnan · Noah Steinkrüger · Vinay Orsu<br/>
+        <span class="muted">University of Technology Nuremberg (UTN), Department CSAI — Nuremberg, Germany</span>
+      </p>
+
+      <div class="cards">
+        <div class="card">
+          <h2 id="abstract">Abstract</h2>
+          <p>
+            We present a fully decentralized conflict detection and resolution module that runs onboard each robot.
+            Conflicts are triggered from LiDAR/odometry/commanded velocity cues, and resolved via a lightweight QP
+            safety filter with a liveness (yielding) constraint to break deadlocks.
+          </p>
+        </div>
+
+        <div class="card">
+          <h2>Key contributions</h2>
+          <ul>
+            <li>Local LiDAR-based conflict triggering (no global coordination required)</li>
+            <li>QP velocity filter with barrier constraints for collision avoidance</li>
+            <li>Liveness constraint (yielding) to break symmetric deadlocks</li>
+            <li>Integration-friendly with standard navigation stacks (e.g., Nav2)</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="figures">
+      <div class="section-title">
+        <h2>Figures</h2>
+        <p class="muted">Click to open full size.</p>
+      </div>
+
+      <div class="grid grid-2">
+        <figure class="media">
+          <a href="./assets/img/figure_pipeline.png" target="_blank" rel="noopener">
+            <img src="./assets/img/figure_pipeline.png" alt="System pipeline diagram" />
+          </a>
+          <figcaption>System architecture: nominal navigation + conflict detection + QP-based resolution.</figcaption>
+        </figure>
+
+        <figure class="media">
+          <a href="./assets/img/figure_detection.png" target="_blank" rel="noopener">
+            <img src="./assets/img/figure_detection.png" alt="Conflict detection zones" />
+          </a>
+          <figcaption>Forward safety zones used for LiDAR-based conflict detection.</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <section class="section" id="videos">
+      <div class="section-title">
+        <h2>Videos</h2>
+        <p class="muted">Short clips demonstrating scenarios (MP4/WebM).</p>
+      </div>
+
+      <div class="grid grid-2">
+        <figure class="media">
+          <video controls preload="metadata" playsinline>
+            <source src="./assets/video/crossing_baseline.mp4" type="video/mp4" />
+          </video>
+          <figcaption>Baseline: resolution-only can get stuck in symmetric oscillation.</figcaption>
+        </figure>
+
+        <figure class="media">
+          <video controls preload="metadata" playsinline>
+            <source src="./assets/video/crossing_ours.mp4" type="video/mp4" />
+          </video>
+          <figcaption>Ours: detection-triggered switching + yielding resolves the crossing.</figcaption>
+        </figure>
+      </div>
+
+      <div class="hint">
+        <strong>Tip:</strong> keep videos small (short + compressed). Pages publishes as CI job artifacts,
+        so very large assets can hit artifact limits depending on your GitLab instance/project settings. :contentReference[oaicite:4]{index=4}
+      </div>
+    </section>
+
+    <section class="section" id="results">
+      <div class="section-title">
+        <h2>Results (quick view)</h2>
+        <p class="muted">Put your headline metrics here; keep it poster-friendly.</p>
+      </div>
+
+      <div class="card">
+        <table>
+          <thead>
+            <tr>
+              <th>Scenario</th>
+              <th>Robots</th>
+              <th>Ours SR</th>
+              <th>Baseline SR</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Crossing</td><td>2</td><td>0.70</td><td>0.50</td>
+            </tr>
+            <tr>
+              <td>Crossing</td><td>3</td><td>0.90</td><td>0.10</td>
+            </tr>
+            <tr>
+              <td>Warehouse</td><td>2</td><td>0.30</td><td>0.00</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="section" id="resources">
+      <div class="section-title">
+        <h2>Resources</h2>
+      </div>
+
+      <div class="cards">
+        <div class="card">
+          <h3>Downloads</h3>
+          <ul>
+            <li><a href="./assets/files/paper.pdf">Paper (PDF)</a></li>
+            <li><a href="./assets/files/poster.pdf">Poster (PDF)</a></li>
+          </ul>
+        </div>
+
+        <div class="card">
+          <h3>BibTeX</h3>
+          <pre class="bibtex">@inproceedings{...,
+  title={Conflict Resolution in Warehouse Robotics},
+  author={Muralikrishnan, Goutham and Steinkr{\"u}ger, Noah and Orsu, Vinay},
+  year={2026}
+}</pre>
+        </div>
+
+        <div class="card">
+          <h3>Contact</h3>
+          <p class="muted">
+            goutham.muralikrishnan@utn.de<br/>
+            noah.steinkrueger@utn.de<br/>
+            orsu.vinay@utn.de
+          </p>
+        </div>
+      </div>
+
+      <footer class="footer">
+        <span class="muted">Built with GitLab Pages.</span>
+      </footer>
+    </section>
+  </main>
+</body>
+</html>
