@@ -64,21 +64,21 @@
 
       <div class="grid grid-2">
         <figure class="media">
-          <a href="./assets/img/figure_pipeline.png" target="_blank" rel="noopener">
-            <img src="./assets/img/figure_pipeline.png" alt="System pipeline diagram" />
+          <a href="./assets/figure_pipeline.png" target="_blank" rel="noopener">
+            <img src="./assets/figure_pipeline.png" alt="System pipeline diagram" />
           </a>
           <figcaption>System architecture: nominal navigation + conflict detection + QP-based resolution.</figcaption>
         </figure>
 
         <figure class="media">
-          <a href="./assets/img/figure_detection.png" target="_blank" rel="noopener">
-            <img src="./assets/img/figure_detection.png" alt="Conflict detection zones" />
+          <a href="./assets/figure_detection.png" target="_blank" rel="noopener">
+            <img src="./assets/figure_detection.png" alt="Conflict detection zones" />
           </a>
           <figcaption>LiDAR safety zones: forward center/diagonal sectors + 360° close-proximity zone.</figcaption>
         </figure>
       </div>
 
-      <div class="grid grid-1" style="margin-top:14px;">
+      <!-- <div class="grid grid-1" style="margin-top:14px;">
         <figure class="media">
           <a href="./assets/img/figure_comparison.png" target="_blank" rel="noopener">
             <img src="./assets/img/figure_comparison.png" alt="Resolution-only vs Detection+Resolution comparison montage" />
@@ -89,7 +89,7 @@
           </figcaption>
         </figure>
       </div>
-    </section>
+    </section> -->
 
     <section class="section" id="videos">
       <div class="section-title">
@@ -100,14 +100,14 @@
       <div class="grid grid-2">
         <figure class="media">
           <video controls preload="metadata" playsinline>
-            <source src="./assets/crossing_resolution_only.mp4" type="video/mp4" />
+            <source src="./assets/crossing_resolution.mp4" type="video/mp4" />
           </video>
           <figcaption><strong>Resolution-only (baseline):</strong> can get stuck in symmetric encounters.</figcaption>
         </figure>
 
         <figure class="media">
           <video controls preload="metadata" playsinline>
-            <source src="./assets/crossing_detection_resolution.mp4" type="video/mp4" />
+            <source src="./assets/crossing_ours.mp4" type="video/mp4" />
           </video>
           <figcaption><strong>Detection+Resolution (ours):</strong> conflict-triggered switching + yielding resolves the crossing.</figcaption>
         </figure>
@@ -209,11 +209,11 @@
     <div class="card">
       <h3>Paper (PDF)</h3>
       <div class="pdf-actions">
-        <a href="./assets/files/paper.pdf" target="_blank" rel="noopener">Open in new tab</a>
+        <a href="./assets/lit_paper.pdf" target="_blank" rel="noopener">Open in new tab</a>
       </div>
       <iframe
         class="pdf-frame"
-        src="./assets/files/paper.pdf#view=FitH"
+        src="./assets/lit_paper.pdf#view=FitH"
         title="Paper PDF"
         loading="lazy"
       ></iframe>
@@ -222,11 +222,11 @@
     <div class="card">
       <h3>Poster (PDF)</h3>
       <div class="pdf-actions">
-        <a href="./assets/files/poster.pdf" target="_blank" rel="noopener">Open in new tab</a>
+        <a href="./assets/LiT_Poster-1.pdf" target="_blank" rel="noopener">Open in new tab</a>
       </div>
       <iframe
         class="pdf-frame"
-        src="./assets/files/poster.pdf#view=FitH"
+        src="./assets/LiT_Poster-1.pdf#view=FitH"
         title="Poster PDF"
         loading="lazy"
       ></iframe>
@@ -240,8 +240,7 @@
         orsu.vinay@utn.de
       </p>
     </div>
-  </div>
-  <div class="card">
+    <div class="card">
   <h3>Acknowledgements</h3>
   <p class="muted">
     We sincerely thank our supervisor, <strong>Dr. Tanja Kaiser</strong>, for her guidance and support throughout this work.
@@ -253,6 +252,8 @@
     Special thanks to <strong>Tobias Fink</strong> and <strong>Dirk Braunschweiger</strong> for their exceptional support.
   </p>
 </div>
+  </div>
+  
   <footer class="footer">
     <span class="muted">Developed by Goutham, Noah and Vinay for the Learning in Transformation Project 25/26.</span>
   </footer>
