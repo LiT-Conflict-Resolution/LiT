@@ -13,7 +13,7 @@
     <div class="container topbar-inner">
       <div class="brand">
         <div class="brand-title">Conflict Resolution in Warehouse Robotics</div>
-        <div class="brand-sub">LIT - 2025/2026</div>
+        <div class="brand-sub">LiT — 2025/2026</div>
       </div>
       <nav class="nav">
         <a href="#abstract">Abstract</a>
@@ -38,18 +38,19 @@
           <h2 id="abstract">Abstract</h2>
           <p>
             We present a fully decentralized conflict detection and resolution module that runs onboard each robot.
-            Conflicts are triggered from LiDAR/odometry/commanded velocity cues, and resolved via a lightweight QP
-            safety filter with a liveness (yielding) constraint to break deadlocks.
+            During nominal navigation, each robot monitors LiDAR scans, odometry, and commanded velocities.
+            When a conflict is triggered, a lightweight quadratic program filters the nominal velocity using
+            LiDAR-derived barrier constraints for collision avoidance and a liveness (yielding) constraint to break deadlocks.
           </p>
         </div>
 
         <div class="card">
           <h2>Key contributions</h2>
           <ul>
-            <li>Local LiDAR-based conflict triggering (no global coordination required)</li>
+            <li>LiDAR-based conflict detection (local, no global coordination)</li>
             <li>QP velocity filter with barrier constraints for collision avoidance</li>
-            <li>Liveness constraint (yielding) to break symmetric deadlocks</li>
-            <li>Integration-friendly with standard navigation stacks (e.g., Nav2)</li>
+            <li>Liveness (yielding) constraint to break symmetric deadlocks</li>
+            <li>Compatible with standard navigation stacks (e.g., Nav2)</li>
           </ul>
         </div>
       </div>
@@ -73,7 +74,19 @@
           <a href="./assets/img/figure_detection.png" target="_blank" rel="noopener">
             <img src="./assets/img/figure_detection.png" alt="Conflict detection zones" />
           </a>
-          <figcaption>Forward safety zones used for LiDAR-based conflict detection.</figcaption>
+          <figcaption>LiDAR safety zones: forward center/diagonal sectors + 360° close-proximity zone.</figcaption>
+        </figure>
+      </div>
+
+      <div class="grid grid-1" style="margin-top:14px;">
+        <figure class="media">
+          <a href="./assets/img/figure_comparison.png" target="_blank" rel="noopener">
+            <img src="./assets/img/figure_comparison.png" alt="Resolution-only vs Detection+Resolution comparison montage" />
+          </a>
+          <figcaption>
+            Qualitative comparison: <strong>Resolution-only</strong> (top row) can remain stuck at the crossing,
+            while <strong>Detection+Resolution</strong> (bottom row) yields and reaches goals.
+          </figcaption>
         </figure>
       </div>
     </section>
@@ -87,88 +100,163 @@
       <div class="grid grid-2">
         <figure class="media">
           <video controls preload="metadata" playsinline>
-            <source src="./assets/crossing_baseline.mp4" type="video/mp4" />
+            <source src="./assets/crossing_resolution_only.mp4" type="video/mp4" />
           </video>
-          <figcaption>Baseline: resolution-only can get stuck in symmetric oscillation.</figcaption>
+          <figcaption><strong>Resolution-only (baseline):</strong> can get stuck in symmetric encounters.</figcaption>
         </figure>
 
         <figure class="media">
           <video controls preload="metadata" playsinline>
-            <source src="./assets/crossing_ours.mp4" type="video/mp4" />
+            <source src="./assets/crossing_detection_resolution.mp4" type="video/mp4" />
           </video>
-          <figcaption>Ours: detection-triggered switching + yielding resolves the crossing.</figcaption>
+          <figcaption><strong>Detection+Resolution (ours):</strong> conflict-triggered switching + yielding resolves the crossing.</figcaption>
         </figure>
       </div>
-
-
-    <section class="section" id="results">
-      <div class="section-title">
-        <h2>Results (quick view)</h2>
-        <p class="muted">Put your headline metrics here; keep it poster-friendly.</p>
-      </div>
-
-      <div class="card">
-        <table>
-          <thead>
-            <tr>
-              <th>Scenario</th>
-              <th>Robots</th>
-              <th>Ours SR</th>
-              <th>Baseline SR</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>Crossing</td><td>2</td><td>0.70</td><td>0.50</td>
-            </tr>
-            <tr>
-              <td>Crossing</td><td>3</td><td>0.90</td><td>0.10</td>
-            </tr>
-            <tr>
-              <td>Warehouse</td><td>2</td><td>0.30</td><td>0.00</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
     </section>
+
+   <section class="section" id="results">
+  <div class="section-title">
+    <h2>Results</h2>
+    <p class="muted">Resolution results (10 runs each). “--” = undefined or not evaluated.</p>
+  </div>
+
+  <div class="card">
+    <div class="table-wrap">
+      <table class="results-table">
+        <thead>
+          <tr>
+            <th>Type</th>
+            <th>Environment</th>
+            <th>Robots</th>
+            <th>Obstacles</th>
+            <th>Detection+Resolution SR ↑</th>
+            <th>T<sub>res</sub> ↓ [s]</th>
+            <th>Resolution-only SR ↑</th>
+            <th>T<sub>res</sub> ↓ [s]</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr class="group-row"><td colspan="8">Static</td></tr>
+
+          <tr>
+            <td>static</td><td>Corridor</td><td>2</td><td>0</td>
+            <td>1.00</td><td>20.35 ± 15.34</td><td>--</td><td>--</td>
+          </tr>
+          <tr>
+            <td>static</td><td>Crossing</td><td>2</td><td>0</td>
+            <td>0.70</td><td>39.53 ± 29.50</td><td>0.50</td><td>0.49 ± 0.63</td>
+          </tr>
+          <tr>
+            <td>static</td><td>Crossing</td><td>3</td><td>0</td>
+            <td>0.90</td><td>66.29 ± 55.16</td><td>0.10</td><td>6.13 ± 0.00</td>
+          </tr>
+          <tr>
+            <td>static</td><td>Crossing</td><td>4</td><td>0</td>
+            <td>0.40</td><td>62.27 ± 41.47</td><td>0.00</td><td>--</td>
+          </tr>
+
+          <tr class="sep-row"><td colspan="8"></td></tr>
+
+          <tr>
+            <td>static</td><td>Corridor</td><td>1</td><td>1</td>
+            <td>1.00</td><td>17.27 ± 8.18</td><td>1.00</td><td>0.53 ± 0.69</td>
+          </tr>
+          <tr>
+            <td>static</td><td>T-junction</td><td>3</td><td>1</td>
+            <td>0.80</td><td>52.13 ± 22.89</td><td>--</td><td>--</td>
+          </tr>
+          <tr>
+            <td>static</td><td>T-junction</td><td>5</td><td>1</td>
+            <td>0.80</td><td>116.33 ± 31.20</td><td>0.00</td><td>--</td>
+          </tr>
+          <tr>
+            <td>static</td><td>Warehouse</td><td>2</td><td>1</td>
+            <td>0.30</td><td>97.55 ± 79.11</td><td>0.00</td><td>--</td>
+          </tr>
+          <tr>
+            <td>static</td><td>Warehouse</td><td>3</td><td>1</td>
+            <td>0.10</td><td>124.98 ± 0.00</td><td>--</td><td>--</td>
+          </tr>
+
+          <tr class="group-row"><td colspan="8">Dynamic</td></tr>
+
+          <tr>
+            <td>dyn</td><td>Corridor</td><td>1</td><td>1</td>
+            <td>0.00</td><td>--</td><td>0.00</td><td>--</td>
+          </tr>
+          <tr>
+            <td>dyn</td><td>Crossing</td><td>3</td><td>1</td>
+            <td>0.10</td><td>135.93 ± 0.00</td><td>--</td><td>--</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <p class="muted" style="margin-top:10px;">
+      “--” indicates undefined (no successful run to compute T<sub>res</sub>) or not evaluated for that configuration.
+    </p>
+  </div>
+</section>
 
     <section class="section" id="resources">
-      <div class="section-title">
-        <h2>Resources</h2>
+  <div class="section-title">
+    <h2>Paper & Poster</h2>
+    <p class="muted">Embedded PDFs (use “Open” if your browser doesn’t display inline).</p>
+  </div>
+
+  <div class="cards">
+    <div class="card">
+      <h3>Paper (PDF)</h3>
+      <div class="pdf-actions">
+        <a href="./assets/files/paper.pdf" target="_blank" rel="noopener">Open in new tab</a>
       </div>
+      <iframe
+        class="pdf-frame"
+        src="./assets/files/paper.pdf#view=FitH"
+        title="Paper PDF"
+        loading="lazy"
+      ></iframe>
+    </div>
 
-      <div class="cards">
-        <div class="card">
-          <h3>Downloads</h3>
-          <ul>
-            <li><a href="./assets/files/paper.pdf">Paper (PDF)</a></li>
-            <li><a href="./assets/files/poster.pdf">Poster (PDF)</a></li>
-          </ul>
-        </div>
-
-        <div class="card">
-          <h3>BibTeX</h3>
-          <pre class="bibtex">@inproceedings{...,
-  title={Conflict Resolution in Warehouse Robotics},
-  author={Muralikrishnan, Goutham and Steinkr{\"u}ger, Noah and Orsu, Vinay},
-  year={2026}
-}</pre>
-        </div>
-
-        <div class="card">
-          <h3>Contact</h3>
-          <p class="muted">
-            goutham.muralikrishnan@utn.de<br/>
-            noah.steinkrueger@utn.de<br/>
-            orsu.vinay@utn.de
-          </p>
-        </div>
+    <div class="card">
+      <h3>Poster (PDF)</h3>
+      <div class="pdf-actions">
+        <a href="./assets/files/poster.pdf" target="_blank" rel="noopener">Open in new tab</a>
       </div>
+      <iframe
+        class="pdf-frame"
+        src="./assets/files/poster.pdf#view=FitH"
+        title="Poster PDF"
+        loading="lazy"
+      ></iframe>
+    </div>
 
-      <footer class="footer">
-        <span class="muted">Built with GitLab Pages.</span>
-      </footer>
-    </section>
+    <div class="card">
+      <h3>Contact</h3>
+      <p class="muted">
+        goutham.muralikrishnan@utn.de<br/>
+        noah.steinkrueger@utn.de<br/>
+        orsu.vinay@utn.de
+      </p>
+    </div>
+  </div>
+  <div class="card">
+  <h3>Acknowledgements</h3>
+  <p class="muted">
+    We sincerely thank our supervisor, <strong>Dr. Tanja Kaiser</strong>, for her guidance and support throughout this work.
+  </p>
+  <p class="muted">
+    We also acknowledge our company partner, <strong>symovo GmbH</strong>, for their collaboration and valuable contributions.
+  </p>
+  <p class="muted">
+    Special thanks to <strong>Tobias Fink</strong> and <strong>Dirk Braunschweiger</strong> for their exceptional support.
+  </p>
+</div>
+  <footer class="footer">
+    <span class="muted">Developed by Goutham, Noah and Vinay for the Learning in Transformation Project 25/26.</span>
+  </footer>
+</section>
   </main>
 </body>
 </html>
